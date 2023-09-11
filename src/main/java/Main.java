@@ -1,50 +1,72 @@
 import java.util.Scanner;
-public class Main
-{
-    public static void main(String[] args) throws Exception{
-
-        Prod p = new Prod();
-        String menu = "";
-        double summa;
-        boolean a1;//вспомогательная переменная для проверки
+public class Main {
+    
+    public static void main(String[] args) {
+    String menu="";
+	double summa=0;
+	int n;
+	boolean a1;
+	double price1=0;
+	
+        Prod p = new Prod(); 
         Scanner input = new Scanner(System.in);
-        summa = 0;
-        a1 = true;
-        int n = 0;
-        System.out.println("Привет! Я – калькулятор счета");
-
-        while (true) { // Запускаем бесконечный цикл
+          System.out.println("Привет! Я – калькулятор счета");
+        while (true) {
             System.out.println("На скольких человек необходимо разделить счет?");
-            n = input.nextInt(); // Получаем количество человек
-
-            if (n==1) {
-                System.out.println("Ошибка, Вы ввели 1");
-            } else {
-                if (n<1) {
-                    System.out.println("Вы ввели отрицательное число!");
-                }
-                else {
-                    System.out.println("Спасибо!");
-                    break;
-                }
+            String str = input.next();
+             n = 0;
+            try {
+                n = Integer.parseInt(str);
+                 if (n==1) {
+	        	    System.out.println("Ошибка, Вы ввели 1");
+	            	} else {
+	                	if (n<1) {
+		                    	System.out.println("Вы ввели отрицательное число!");
+		                    	}
+		                    	else {
+		                    	    if (n==0){
+		                    	        System.out.println("Ошибка, Вы ввели 0");
+		                    	    }else{
+			                    	System.out.println("Спасибо!");
+				                     break;
+			                        }
+                                 } 
+                
+                
+            }
+                
+            } catch (NumberFormatException ne) {
+                System.out.println("Ошибка, введите число");
             }
         }
 
-        while (a1) {
+        while (true) {
             System.out.println("Введите название блюда и нажмите Enter. Если ввод закончен, введите \"Завершить\"");
+            
             p.name = input.next();
-            //System.out.println(p.name);
             if (p.name.equalsIgnoreCase("Завершить")) {
-                a1=false;
                 break;
             }
+            while (true) {
             System.out.println("Введите цену блюда");
-            p.price = input.nextDouble ();
-            menu = menu + "\n" + p.name;
+            String str1 = input.next();
+             try {
+             price1 = Double.parseDouble(str1);
+             if (price1<0){
+                 System.out.println("Вы ввели отрицательное число!");
+             }else{
+                 break;
+             }
+               }catch (NumberFormatException ne) {
+                System.out.println("Ошибка, введите число");
+             } 
+            }
+           p.price = price1; 
+             menu = menu + "\n" + p.name;
             summa = summa + p.price;
             System.out.println("Товар добавлен");
-            //  p.name = "";
             System.out.println("Хотите ли добавить еще один товар?");
+           
         }
         System.out.print("Добавленные товары: ");
         System.out.println(menu);
@@ -62,8 +84,7 @@ public class Main
                 System.out.print(" рублей");
             }
         }
-    }
-
+}
 }
 class Prod {
     String name = ""; // Название блюда
