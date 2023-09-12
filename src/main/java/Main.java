@@ -1,69 +1,46 @@
-import java.util.Scanner;
-public class Main
-{
-    public static void main(String[] args) throws Exception{
+//import java.util.Scanner;
+
+import java.util.ArrayList;
+//import java.util.Collections;
+import java.util.List;
+
+//import java.Input.Input;
+public class Main {
+
+    public static void main(String[] args) {
+
+        double summa=0;
+
+        //boolean a1;
+       // double price1=0;
+
+        List<String> menu1 = new ArrayList<String>();
 
         Prod p = new Prod();
-        String menu = "";
-        double summa;
-        boolean a1;//вспомогательная переменная для проверки
-        Scanner input = new Scanner(System.in);
-        summa = 0;
-        a1 = true;
-        int n = 0;
-        System.out.println("Привет! Я – калькулятор счета");
+        int n=Input.human();
 
-        while (true) { // Запускаем бесконечный цикл
-            System.out.println("На скольких человек необходимо разделить счет?");
-            n = input.nextInt(); // Получаем количество человек
+       while (true){
+           String nameb = Input.name();
+           if (nameb.equalsIgnoreCase("Завершить")) {
+               break;
+           }
+            p.price = Input.inp();
 
-            if (n==1) {
-                System.out.println("Ошибка, Вы ввели 1");
-            } else {
-                if (n<1) {
-                    System.out.println("Вы ввели отрицательное число!");
-                }
-                else {
-                    System.out.println("Спасибо!");
-                    break;
-                }
-            }
-        }
+           menu1 = Calc.menu(nameb);
+          summa= Calc.calculator(p.price);
+           System.out.println("Товар добавлен");
+           System.out.println("Хотите ли добавить еще один товар?");
+            ///////
 
-        while (a1) {
-            System.out.println("Введите название блюда и нажмите Enter. Если ввод закончен, введите \"Завершить\"");
-            p.name = input.next();
-            //System.out.println(p.name);
-            if (p.name.equalsIgnoreCase("Завершить")) {
-                a1=false;
-                break;
-            }
-            System.out.println("Введите цену блюда");
-            p.price = input.nextDouble ();
-            menu = menu + "\n" + p.name;
-            summa = summa + p.price;
-            System.out.println("Товар добавлен");
-            //  p.name = "";
-            System.out.println("Хотите ли добавить еще один товар?");
         }
         System.out.print("Добавленные товары: ");
-        System.out.println(menu);
+        System.out.println(menu1.toString().replace("[", "").replace("]", ""));
+
         summa = summa/n;
         System.out.print("Необходимо оплатить: ");
-        int x = (int) summa%100/10;
-        int y = (int) summa%10;
         System.out.printf("%.2f",summa);
-        if (summa == 1||(y==1 && x!=1)){
-            System.out.print(" рубль");
-        }else{
-            if ((y==2||y==3||y==4)&&x!=1){
-                System.out.print(" рубля");
-            }else{
-                System.out.print(" рублей");
-            }
-        }
+        Form.sum(summa);
     }
-
 }
 class Prod {
     String name = ""; // Название блюда
